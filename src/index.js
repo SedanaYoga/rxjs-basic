@@ -1,13 +1,9 @@
-import { fromEvent } from 'rxjs'
-import { pluck, filter } from 'rxjs/operators'
+import { of } from 'rxjs'
+import { reduce } from 'rxjs/operators'
 
-const observable = fromEvent(document, 'keydown')
-const spaceOnly = observable.pipe(
-  pluck('code'),
-  filter((code) => code === 'Space'),
-)
+const observable = of(1, 2, 3, 4, 5).pipe(reduce((prev, cur) => prev + cur, 0))
 
-const subscription = spaceOnly.subscribe({
+const subscription = observable.subscribe({
   next(value) {
     console.log(value)
   },
