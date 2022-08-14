@@ -1,10 +1,13 @@
 import { fromEvent } from 'rxjs'
-import { pluck } from 'rxjs/operators'
+import { pluck, filter } from 'rxjs/operators'
 
 const observable = fromEvent(document, 'keydown')
-const codeOnly = observable.pipe(pluck('code'))
+const spaceOnly = observable.pipe(
+  pluck('code'),
+  filter((code) => code === 'Space'),
+)
 
-const subscription = codeOnly.subscribe({
+const subscription = spaceOnly.subscribe({
   next(value) {
     console.log(value)
   },
