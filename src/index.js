@@ -1,7 +1,10 @@
-import { of } from 'rxjs'
-import { reduce } from 'rxjs/operators'
+import { interval } from 'rxjs'
+import { reduce, take } from 'rxjs/operators'
 
-const observable = of(1, 2, 3, 4, 5).pipe(reduce((prev, cur) => prev + cur, 0))
+const observable = interval(500).pipe(
+  take(5), // only take first 5 interval value
+  reduce((prev, cur) => prev + cur, 0),
+)
 
 const subscription = observable.subscribe({
   next(value) {
