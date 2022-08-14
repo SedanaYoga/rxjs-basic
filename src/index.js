@@ -1,12 +1,11 @@
 import { fromEvent, interval } from 'rxjs'
-import { switchMap, tap, take } from 'rxjs/operators'
+import { concatMap, tap } from 'rxjs/operators'
 import { ajax } from 'rxjs/ajax'
 
 const button = document.querySelector('#btn')
 const observable = fromEvent(button, 'click').pipe(
-  switchMap(() => {
-    return interval(500).pipe(
-      take(5),
+  concatMap(() => {
+    return ajax.getJSON('https://jsonplaceholder.typicode.com/todos/1').pipe(
       tap({
         complete() {
           console.log('Inner observable completed')
