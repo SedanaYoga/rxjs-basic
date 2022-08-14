@@ -1,15 +1,14 @@
-import { from } from 'rxjs'
+import { of } from 'rxjs'
+import { map } from 'rxjs/operators'
 
-// `from` can be used if we want to loop in values inside an array/string/object
-const observable = from([1, 2, 3, 4, 5, 6])
-// const observable = from(fetch('https://jsonplaceholder.typicode.com/todos/1'))
+const observable = of(1, 2, 3, 4, 5, 6)
+const numbersWithSymbol = observable.pipe(map((value) => `$${value}`))
 
-const subscription = observable.subscribe({
+const subscription = numbersWithSymbol.subscribe({
   next(value) {
     console.log(value)
   },
   complete() {
-    // the operator complete after finishing the loop
     console.log('completed')
   },
 })
