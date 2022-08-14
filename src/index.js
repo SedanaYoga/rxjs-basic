@@ -1,9 +1,14 @@
 import { interval } from 'rxjs'
-import { scan, take } from 'rxjs/operators'
+import { tap, reduce, take } from 'rxjs/operators'
 
 const observable = interval(500).pipe(
   take(5),
-  scan((prev, cur) => prev + cur, 0), // accumulated values real time
+  tap({
+    next(value) {
+      console.log(value)
+    },
+  }),
+  reduce((prev, cur) => prev + cur, 0),
 )
 
 const subscription = observable.subscribe({
