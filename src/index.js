@@ -1,9 +1,9 @@
 import { interval } from 'rxjs'
-import { reduce, take } from 'rxjs/operators'
+import { scan, take } from 'rxjs/operators'
 
 const observable = interval(500).pipe(
-  take(5), // only take first 5 interval value
-  reduce((prev, cur) => prev + cur, 0),
+  take(5),
+  scan((prev, cur) => prev + cur, 0), // accumulated values real time
 )
 
 const subscription = observable.subscribe({
